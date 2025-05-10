@@ -184,16 +184,40 @@ def profile():
                 color: #555;
                 font-size: 18px;
             }
+                                  
+            .logout-btn {
+                display: inline-block;
+                margin-top: 20px;
+                padding: 10px 20px;
+                background-color: #f44336;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                text-decoration: none;
+                font-weight: bold;
+                transition: background 0.3s;
+            }
+                                  
+            .logout-btn:hover {
+                background-color: #d32f2f;
+            }
+
         </style>
     </head>
     <body>
         <div class="welcome-box">
             <h1>Olá, {{ user.name }}!</h1>
             <p>Email: {{ user.email }}</p>
+            <a href="{{ url_for('logout') }}" class="logout-btn">Deslogar</a>
         </div>
     </body>
     </html>
     ''', user=user)
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
