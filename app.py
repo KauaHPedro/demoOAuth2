@@ -3,10 +3,10 @@ from flask import Flask, redirect, url_for, session, request, render_template_st
 from requests_oauthlib import OAuth2Session
 import os
 
-# Carrega variáveis de ambiente de .env
+# carrega os datos do .env
 load_dotenv()
 
-# Permite usar HTTP em localhost (não recomendado em produção)
+# linha pra usar permitir usar http
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 app = Flask(__name__)
@@ -149,11 +149,10 @@ def profile():
     resp = google.get(userinfo_endpoint)
     user = resp.json()
 
-    # Se os dados vierem incompletos, exibe resposta crua para debug
+    # linha pra ajudar no debug se os dados vierem incompletos
     if 'name' not in user or 'email' not in user:
         return f"<p>Erro: Dados incompletos. Resposta da API:</p><pre>{user}</pre>"
 
-    # HTML simples inline; substitua por template separado se desejar
     return render_template_string('''
     <html>
     <head>
@@ -221,5 +220,4 @@ def logout():
 
 
 if __name__ == '__main__':
-    # Executa app em modo debug (remova debug=True em produção)
     app.run(debug=True)
